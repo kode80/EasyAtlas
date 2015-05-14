@@ -102,6 +102,9 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 			obj.select = True
 			bpy.context.scene.objects.active = obj
 
+			for layer in obj.data.uv_textures:
+				if layer.name == "EasyAtlas":
+					obj.data.uv_textures.remove( layer)
 
 			bounds = self.CalcBoundsOfObject( obj)
 			offsetX = 0.5 - bounds.midX()
