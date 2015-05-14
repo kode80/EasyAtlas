@@ -85,6 +85,9 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 		x = start
 		y = start
 
+		margin = context.scene.render.bake_margin
+		cellMargin = margin * 2.0 / settings.width
+
 
 		for obj in meshObjects:
 			bpy.ops.object.mode_set(mode="OBJECT")
@@ -112,7 +115,7 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 			oldAreaType = context.area.type
 			context.area.type = 'IMAGE_EDITOR'
 			bpy.ops.transform.translate(value=( x + offsetX, y + offsetY, 0.0))
-			bpy.ops.transform.resize(value=( cellSize * 0.95, cellSize * 0.95, 0.0))
+			bpy.ops.transform.resize(value=( cellSize - cellMargin, cellSize - cellMargin, 0.0))
 			
 			bpy.ops.object.bake_image()
 
