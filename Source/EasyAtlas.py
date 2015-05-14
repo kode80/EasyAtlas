@@ -34,6 +34,10 @@ class Bounds:
 	def height( self):
 		return self.maxY - self.minY
 
+class EasyAtlas_Settings(bpy.types.PropertyGroup):
+	width = bpy.props.IntProperty( name="Atlas Width", description="Atlas texture width in pixels", default=1024, min=64)
+	height = bpy.props.IntProperty( name="Atlas Height", description="Atlas texture height in pixels", default=1024, min=64)
+
 class EasyAtlas_CreateAtlas(bpy.types.Operator):
 	"""Create atlas from scene"""
 	bl_idname = "kode80.easyatlas_create_atlas"
@@ -63,8 +67,8 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 		return bounds
 
 	def execute(self, context):
-		print( "Test CreateAtlas")
-		atlasImage = bpy.data.images.new( "EasyAtlas", 1024, 1024, alpha=True)
+		settings = bpy.context.scene.EasyAtlas_Settings
+		atlasImage = bpy.data.images.new( "EasyAtlas", settings.width, settings.height, alpha=True)
 
 		context.scene.render.use_bake_clear = True
 		context.scene.render.bake_type = 'FULL'
@@ -135,17 +139,26 @@ class EasyAtlasPanel(bpy.types.Panel):
 	bl_context = "render"
 
 	def draw(self, context):
+		settings = bpy.context.scene.EasyAtlas_Settings
 		layout = self.layout
+
+		layout.prop( settings, "width")
+		layout.prop( settings, "height")
 		layout.operator( "kode80.easyatlas_create_atlas", "Create Atlas")
 
 
 def register():
+	bpy.utils.register_class(EasyAtlas_Settings)
+	bpy.types.Scene.EasyAtlas_Settings = bpy.props.PointerProperty(type=EasyAtlas_Settings)
+
 	bpy.utils.register_class(EasyAtlas_CreateAtlas)
 	bpy.utils.register_class(EasyAtlasPanel)
 
 def unregister():
 	bpy.utils.unregister_class(EasyAtlasPanel)
 	bpy.utils.unregister_class(EasyAtlas_CreateAtlas)
+
+	bpy.utils.unregister_class(EasyAtlas_Settings)
 
 if __name__ == "__main__":
 	register()
