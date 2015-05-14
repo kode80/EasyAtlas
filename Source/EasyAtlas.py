@@ -82,7 +82,7 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 
 		meshObjects = []
 		for obj in context.scene.objects:
-			if obj.type == "MESH":
+			if obj.type == "MESH" and obj.data.uv_textures.active != None:
 				meshObjects.append( obj)
 
 		gridSize = math.ceil( math.sqrt( len(meshObjects)))
