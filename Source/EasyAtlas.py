@@ -68,7 +68,14 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 
 	def execute(self, context):
 		settings = bpy.context.scene.EasyAtlas_Settings
-		atlasImage = bpy.data.images.new( "EasyAtlas", settings.width, settings.height, alpha=True)
+		
+		atlasImage = None
+		for image in bpy.data.images:
+			if image.name == "EasyAtlas":
+				atlasImage = image
+
+		if atlasImage == None:
+			atlasImage = bpy.data.images.new( "EasyAtlas", settings.width, settings.height, alpha=True)
 
 		context.scene.render.use_bake_clear = True
 		context.scene.render.bake_type = 'FULL'
