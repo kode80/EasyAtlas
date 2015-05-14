@@ -109,7 +109,6 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 			context.area.type = 'IMAGE_EDITOR'
 			bpy.ops.transform.translate(value=( x + offsetX, y + offsetY, 0.0))
 			bpy.ops.transform.resize(value=( cellSize * 0.95, cellSize * 0.95, 0.0))
-			#bpy.ops.transform.transform( mode="TRANSLATION", value=( x, y, 0.0, 0.0))
 			
 			bpy.ops.object.bake_image()
 
