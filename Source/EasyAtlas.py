@@ -44,7 +44,7 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 	bl_label = "Create Atlas"
 	bl_options = {'REGISTER', 'UNDO'}
 	
-	def CalcBoundsOfObject( self, obj):
+	def CalcUVBoundsOfObject( self, obj):
 		bounds = Bounds()
 
 		mesh = obj.data
@@ -106,7 +106,7 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 				if layer.name == "EasyAtlas":
 					obj.data.uv_textures.remove( layer)
 
-			bounds = self.CalcBoundsOfObject( obj)
+			bounds = self.CalcUVBoundsOfObject( obj)
 			offsetX = 0.5 - bounds.midX()
 			offsetY = 0.5 - bounds.midY()
 
@@ -129,9 +129,9 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 			
 			bpy.ops.object.bake_image()
 
+			context.area.type = oldAreaType
 			bpy.ops.object.mode_set(mode="OBJECT")
 			obj.data.uv_textures.active = oldLayer
-			context.area.type = oldAreaType
 
 			x += cellSize
 			if x > end:
