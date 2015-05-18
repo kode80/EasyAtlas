@@ -112,6 +112,7 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 
 
 			oldLayer = obj.data.uv_textures.active
+			oldLayerIndex = obj.data.uv_textures.active_index
 			uvLayer = obj.data.uv_textures.new( "EasyAtlas")
 			obj.data.uv_textures.active = uvLayer
 
@@ -132,6 +133,7 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 			context.area.type = oldAreaType
 			bpy.ops.object.mode_set(mode="OBJECT")
 			obj.data.uv_textures.active = oldLayer
+			obj.data.uv_textures.active_index = oldLayerIndex
 
 			x += cellSize
 			if x > end:
