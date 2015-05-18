@@ -115,6 +115,7 @@ class EasyAtlas_CreateAtlas(bpy.types.Operator):
 			oldLayerIndex = obj.data.uv_textures.active_index
 			uvLayer = obj.data.uv_textures.new( "EasyAtlas")
 			obj.data.uv_textures.active = uvLayer
+			obj.data.uv_textures.active_index = obj.data.uv_textures.find( uvLayer.name)
 
 			for p in uvLayer.data:
 				p.image = atlasImage
